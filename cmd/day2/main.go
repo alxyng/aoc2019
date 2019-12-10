@@ -1,13 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"strconv"
 	"strings"
 
 	"github.com/nullseed/aoc2019/pkg/intcode"
-	"github.com/pkg/errors"
 )
 
 func main() {
@@ -42,7 +42,7 @@ func main() {
 func readProgram(filename string) (intcode.Program, error) {
 	data, err := ioutil.ReadFile(filename)
 	if err != nil {
-		return nil, errors.Wrapf(err, "error reading file")
+		return nil, fmt.Errorf("error reading file: %w", err)
 	}
 
 	intStrs := strings.Split(string(data), ",")
@@ -51,7 +51,7 @@ func readProgram(filename string) (intcode.Program, error) {
 	for i, intStr := range intStrs {
 		intInt, err := strconv.Atoi(intStr)
 		if err != nil {
-			return nil, errors.Wrapf(err, "error parsing file")
+			return nil, fmt.Errorf("error parsing file: %w", err)
 		}
 		prog[i] = intInt
 	}
